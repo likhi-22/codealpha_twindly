@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twindly - Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            min-height: 100vh;
+            height: 100%;
+            /* Use a more visible pastel purple solid color */
+            background: #e0c3fc !important;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: transparent !important;
+        }
+        .auth-section {
+            width: 100%;
+            max-width: 400px;
+            background: transparent !important;
+        }
+        .auth-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 28px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+            padding: 44px 36px 36px 36px;
+            position: relative;
+            color: #222e3c;
+            backdrop-filter: blur(4px);
+            border: 1.5px solid #e3e6f3;
+        }
+        .form-title {
+            font-size: 1.2rem;
+            color: #1976d2;
+            font-weight: 500;
+            margin-bottom: 18px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .form-control {
+            border-radius: 8px;
+            background: #f4f6fb;
+            color: #222e3c;
+            border: none;
+            margin-bottom: 18px;
+        }
+        .form-control:focus {
+            background: #3f4976;
+            color: #222e3c;
+            border: 1.5px solid #a18cd1;
+            box-shadow: none;
+        }
+        .input-group-text {
+            background: transparent;
+            border: none;
+            color: #1976d2;
+        }
+        .remember-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            font-size: 0.97rem;
+        }
+        .btn-login {
+            width: 100%;
+            background: linear-gradient(90deg, #a18cd1 0%, #fbc2eb 100%);
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 0;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 12px rgba(161,140,209,0.10);
+            transition: background 0.2s;
+        }
+        .btn-login:hover {
+            background: linear-gradient(90deg, #fbc2eb 0%, #a18cd1 100%);
+            color: #fff;
+        }
+        .switch-btns {
+            display: flex;
+            gap: 4%;
+            margin-bottom: 18px;
+        }
+        .auth-btn {
+            width: 48%;
+            margin-bottom: 0;
+            border: 2px solid #a18cd1;
+            color: #1976d2;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+        }
+        .auth-btn.active, .auth-btn:hover {
+            background: linear-gradient(90deg, #a18cd1 0%, #fbc2eb 100%);
+            color: #fff;
+            border: 2px solid #fff;
+        }
+        .forgot-link {
+            color: #a18cd1;
+            text-decoration: none;
+            font-size: 0.97rem;
+        }
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+        .alert {
+            font-size: 0.97rem;
+            border-radius: 8px;
+        }
+    </style>
+    <script>
+        function showForm(formId) {
+            document.getElementById('loginForm').style.display = formId === 'loginForm' ? 'block' : 'none';
+            document.getElementById('createForm').style.display = formId === 'createForm' ? 'block' : 'none';
+            document.getElementById('loginBtn').classList.toggle('active', formId === 'loginForm');
+            document.getElementById('createBtn').classList.toggle('active', formId === 'createForm');
+        }
+        window.onload = function() {
+            showForm('loginForm');
+        };
+    </script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="auth-section">
+            <div class="auth-card">
+                <div class="switch-btns mb-3">
+                    <button id="loginBtn" class="auth-btn active" onclick="showForm('loginForm')">Login</button>
+                    <button id="createBtn" class="auth-btn" onclick="showForm('createForm')">Create Account</button>
+                </div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} mt-2">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <!-- Login Form -->
+                <form id="loginForm" action="/login/" method="post" style="display: none;">
+                    {% csrf_token %}
+                    <div class="form-title">Login to your account</div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.383V5.383zm-.034 7.434-5.482-3.29-5.482 3.29A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.183zM1 5.383v6l4.708-2.825L1 5.383z"/></svg></span>
+                        <input type="text" name="username" placeholder="Email ID or Username" class="form-control" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16"><path d="M8 1a4 4 0 0 0-4 4v3H3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-1V5a4 4 0 0 0-4-4zm3 7V5a3 3 0 0 0-6 0v3h6zm-7 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-4z"/></svg></span>
+                        <input type="password" name="password" placeholder="Password" class="form-control" required>
+                    </div>
+                    <div class="remember-row">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-link">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-login">LOGIN</button>
+                </form>
+                <!-- Create Account Form -->
+                <form id="createForm" action="/register/" method="post" style="display: none;">
+                    {% csrf_token %}
+                    <div class="form-title">Create a new account</div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm4-3a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM2 13s-1 0-1-1 1-4 7-4 7 3 7 4-1 1-1 1H2zm13-1c0-1-4-3-7-3s-7 2-7 3 4 3 7 3 7-2 7-3z"/></svg></span>
+                        <input type="text" name="username" placeholder="Username" class="form-control" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.383V5.383zm-.034 7.434-5.482-3.29-5.482 3.29A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.183zM1 5.383v6l4.708-2.825L1 5.383z"/></svg></span>
+                        <input type="email" name="email" placeholder="Email" class="form-control" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16"><path d="M8 1a4 4 0 0 0-4 4v3H3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-1V5a4 4 0 0 0-4-4zm3 7V5a3 3 0 0 0-6 0v3h6zm-7 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-4z"/></svg></span>
+                        <input type="password" name="password1" placeholder="Password" class="form-control" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16"><path d="M8 1a4 4 0 0 0-4 4v3H3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-1V5a4 4 0 0 0-4-4zm3 7V5a3 3 0 0 0-6 0v3h6zm-7 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-4z"/></svg></span>
+                        <input type="password" name="password2" placeholder="Confirm Password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-login">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
