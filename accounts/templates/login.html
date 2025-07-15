@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f8fafc 0%, #e3e6f3 100%);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .auth-section {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        padding-top: 60px;
+    }
+    .auth-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 28px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+        padding: 44px 36px 36px 36px;
+        color: #222e3c;
+        backdrop-filter: blur(4px);
+        border: 1.5px solid #e3e6f3;
+    }
+    .form-title {
+        font-size: 1.2rem;
+        color: #1976d2;
+        font-weight: 500;
+        margin-bottom: 18px;
+        text-align: center;
+        letter-spacing: 1px;
+    }
+    .form-control {
+        border-radius: 8px;
+        background: #f4f6fb;
+        color: #222e3c;
+        border: none;
+        margin-bottom: 18px;
+    }
+    .form-control:focus {
+        background: #e3e6f3;
+        color: #222e3c;
+        border: 1.5px solid #a18cd1;
+        box-shadow: none;
+    }
+    .btn-login {
+        width: 100%;
+        background: linear-gradient(90deg, #a18cd1 0%, #fbc2eb 100%);
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 0;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        box-shadow: 0 2px 12px rgba(161,140,209,0.10);
+        transition: background 0.2s;
+    }
+    .btn-login:hover {
+        background: linear-gradient(90deg, #fbc2eb 0%, #a18cd1 100%);
+        color: #fff;
+    }
+    .switch {
+        text-align: center;
+        margin-top: 18px;
+        color: #222e3c;
+    }
+    .switch a { color: #a18cd1; text-decoration: underline; }
+</style>
+<div class="auth-section">
+    <div class="auth-card">
+        <div class="form-title">Login</div>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" class="form-control" required>
+            <input type="password" name="password" placeholder="Password" class="form-control" required>
+            <button type="submit" class="btn btn-login">Login</button>
+        </form>
+        <div class="switch">Don't have an account? <a href="/register/">Create Account</a></div>
+    </div>
+</div>
+{% endblock %}
