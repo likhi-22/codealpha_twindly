@@ -102,5 +102,3 @@ This project is created for **educational purposes** only and is not intended fo
 
 Let me know if you want a downloadable `.md` file, project logo suggestion, or deployment instructions (like how to host this on **Render**, **Heroku**, or **PythonAnywhere**).
 
-<img width="1767" height="902" alt="image" src="https://github.com/user-attachments/assets/6f21fb1a-3711-48e1-bc41-d741bfd1b973" />
-<img width="1748" height="898" alt="image" src="https://github.com/user-attachments/assets/33a5bbae-bebf-4210-9511-1a6d97862684" />
